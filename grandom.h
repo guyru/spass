@@ -17,27 +17,34 @@
  */
 
 #include <cstdio>
+#include <portaudio.h>
 #include "md5.h"
 
-class Grandom {
-	public:
-		Grandom();
-		virtual ~Grandom();
-		/**
-		 * Generate a random dword
-		 */
-		uint32_t operator()();
-	private:
-		void gather_entropy();
-		void get_block();
-		
-		FILE* m_dsp_fd;
-		uint32_t m_index;
-		union {
-			char digest[16];
-			uint32_t v[4];
-		} m_buffer;
+class Grandom
+{
+public:
+	static Grandom& getInstance();
+	virtual ~Grandom();
+	/**
+	 * Generate a random dword
+	 */
+	uint32_t operator()();
+private:
+	Grandom();
+	void gather_entropy();
+	void get_block();
+	
+	PaStream *m_stream;
+	uint32_t m_index;
+	union {
+		char digest[16];
+		uint32_t v[4];
+	} m_buffer;
 
-		md5_ctx m_md5_ctx;
-		uint32_t m_block[512/32];
+	md5_ctx m_md5_ctx;
+	uint32_t m_block[512/32];
+
+	bool m_pa_initialization_failed;
+	Grandom(Grandom const&); //no implementation
+	void operator=(Grandom const&); //no implementation
 };

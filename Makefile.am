@@ -7,4 +7,4 @@ spass_SOURCES = config.h \
 		md5.h
 
 #AM_CPPFLAGS = "$(all_includes)"
-LDADD = -lboost_program_options
+LDADD = -lboost_program_options -lportaudio

@@ -1,6 +1,6 @@
 /*
  * spass - Secure password generator.
- * Copyright (C) 2010  Guy Rutenberg
+ * Copyright (C) 2010-2012  Guy Rutenberg
  * http://www.guyrutenberg.com
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -31,8 +31,8 @@ static void expand_strip(const string &in, string &out);
 
 int main(int argc, char **argv)
 {
-	size_t password_len;
-	string strip;
+	size_t password_len = 9;
+	string strip = "a-z";
 	po::options_description desc("Options");
         desc.add_options()
 		("help,h", "produce this help message")
@@ -78,14 +78,12 @@ int main(int argc, char **argv)
  */
 void generate_password(size_t length, const string &strip, string &output)
 {
-	Grandom grand;
-
 	output.clear();
 	output.reserve(length);
 
 	size_t strip_len = strip.size();
 	for (size_t i = 0; i < length; i++) {
-		double r = static_cast<double>(grand()) / static_cast<uint32_t>(-1);
+		double r = static_cast<double>(Grandom::getInstance()()) / static_cast<uint32_t>(-1);
 		uint32_t transform = static_cast<uint32_t>(r * strip_len) % strip_len;
 		output += strip.at(transform);
 	}

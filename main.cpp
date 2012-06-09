@@ -23,6 +23,7 @@
 #include <boost/program_options.hpp>
 #include "audio_random.h"
 #include "audio_random_portaudio.h"
+#include "audio_random_oss.h"
 #include "config.h"
 
 using namespace std;
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
 		output = &out_file;
 	}
 
-	AudioRandom::getInstance()->setBackend(AudioRandomPortAudio::getInstance());
+	AudioRandom::getInstance()->setBackend(AudioRandomOSS::getInstance());
 
 	if (vm.count("raw")) {
 		raw_randomness(password_len, *output);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010  Guy Rutenberg
+ * Copyright (C) 2010-2012  Guy Rutenberg
  * http://www.guyrutenberg.com
  * 
  * This program is free software: you can redistribute it and/or modify
@@ -16,35 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cstdio>
+#ifndef _AUDIO_RANDOM_PORTAUDIO_H_
+#define _AUDIO_RANDOM_PORTAUDIO_H_
+
 #include <portaudio.h>
-#include "md5.h"
+#include "audio_random.h"
 
-class Grandom
-{
+class AudioRandomPortAudio
+: public AudioRandomSource {
 public:
-	static Grandom& getInstance();
-	virtual ~Grandom();
-	/**
-	 * Generate a random dword
-	 */
-	uint32_t operator()();
+	static AudioRandomPortAudio* getInstance();
+	virtual ~AudioRandomPortAudio();
+	virtual void getSamples(void *samples, size_t num_samples);
 private:
-	Grandom();
-	void gather_entropy();
-	void get_block();
-	
+	AudioRandomPortAudio();
+	AudioRandomPortAudio(AudioRandomPortAudio const&); //no implementation
+	void operator=(AudioRandomPortAudio const&); //no implementation
+
 	PaStream *m_stream;
-	uint32_t m_index;
-	union {
-		char digest[16];
-		uint32_t v[4];
-	} m_buffer;
-
-	md5_ctx m_md5_ctx;
-	uint32_t m_block[512/32];
-
 	bool m_pa_initialization_failed;
-	Grandom(Grandom const&); //no implementation
-	void operator=(Grandom const&); //no implementation
 };
+
+#endif // _AUDIO_RANDOM_PORTAUDIO_H_

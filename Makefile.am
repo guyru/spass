@@ -1,8 +1,11 @@
 bin_PROGRAMS = spass
-spass_SOURCES = config.h \
-		grandom.cpp \
-		grandom.h \
+spass_SOURCES = audio_random.h \
+		audio_random.cpp \
+		audio_random_portaudio.h \
+		audio_random_portaudio.cpp \
+		config.h \
 		main.cpp \
+		diceware8k.c \
 		md5.c \
 		md5.h
 

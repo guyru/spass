@@ -28,7 +28,7 @@ using namespace std;
 const size_t NUM_SAMPLES = 2048;
 
 AudioRandom::AudioRandom() :
-	m_index(-1)
+	m_index(0)
 {
 	md5_init_ctx(&m_md5_ctx);
 }
@@ -46,7 +46,7 @@ void AudioRandom::setBackend(AudioRandomSource* source)
 
 uint32_t AudioRandom::getDword()
 {
-	if (m_index) {
+	if (!m_index) {
 		// we don't have any prepared random dwords
 		get_block();
 	}

@@ -17,19 +17,14 @@
  */
 
 #include <stdexcept>
-#include <cstring>
-#include <cstdio>
-#include <cerrno>
 #include <portaudio.h>
-#include "grandom.h"
-#include "md5.h"
+#include "audio_random_portaudio.h"
 
 using namespace std;
 
 const size_t NUM_SAMPLES = 2048;
 
-Grandom::Grandom() :
-	m_index(-1)
+AudioRandomPortAudio::AudioRandomPortAudio()
 {
 	PaError err;
 
@@ -51,69 +46,32 @@ Grandom::Grandom() :
 	
 	if (err != paNoError )
 		throw runtime_error("Pa_OpenDefaultStream() failed");
-
-	md5_init_ctx(&m_md5_ctx);
 }
 
-Grandom::~Grandom()
+AudioRandomPortAudio::~AudioRandomPortAudio()
 {
 	if (!m_pa_initialization_failed)
 		Pa_CloseStream( m_stream );
 }
 
-Grandom& Grandom::getInstance() {
-	static Grandom instance;
-	return instance;
+AudioRandomPortAudio* AudioRandomPortAudio::getInstance()
+{
+	static AudioRandomPortAudio instance;
+	return &instance;
 }
 
-uint32_t Grandom::operator()()
+void AudioRandomPortAudio::getSamples(void *samples, size_t num_samples)
 {
-	if (m_index) {
-		// we don't have any prepared random dwords
-		get_block();
-	}
-	return m_buffer.v[--m_index];
-}
-
-void Grandom::gather_entropy()
-{
-	int16_t sample_buffer[NUM_SAMPLES];
-	unsigned int noise;
-	unsigned int bits_needed = 512;
 	PaError err;
-
 	err = Pa_StartStream(m_stream);
 	if (err != paNoError)
 		throw runtime_error("Pa_StartStream() failed");
 
-	while (bits_needed) {
-		err = Pa_ReadStream(m_stream, sample_buffer, NUM_SAMPLES);
-		if (err != paNoError)
-			throw runtime_error("Pa_ReadStream() failed");
-
-
-		// fill 512/32 dwords with random bits from the sample buffer
-		for (int i = 0; i<NUM_SAMPLES && bits_needed; i+=2) {
-			// apply a von-neuman correction
-			if (!((sample_buffer[i] ^ sample_buffer[i+1]) & 0x0001))
-				continue;
-
-			// xoring more bits only adds entropy
-			noise = (sample_buffer[i]) << ((bits_needed-1) % 32);
-			m_block[(bits_needed - 1)/16] ^= noise;
-			--bits_needed;
-		}
-	}
+	err = Pa_ReadStream(m_stream, samples, num_samples);
+	if (err != paNoError)
+		throw runtime_error("Pa_ReadStream() failed");
 
 	err = Pa_StopStream(m_stream);
 	if (err != paNoError)
 		throw runtime_error("Pa_StopStream() failed");
-}
-
-void Grandom::get_block()
-{
-	gather_entropy();
-	md5_process_block(m_block, 64, &m_md5_ctx);
-	md5_read_ctx(&m_md5_ctx,m_buffer.digest);
-	m_index = 4;
 }

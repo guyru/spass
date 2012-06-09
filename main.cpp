@@ -17,28 +17,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <boost/program_options.hpp>
-#include "grandom.h"
+#include "audio_random.h"
+#include "audio_random_portaudio.h"
 #include "config.h"
 
 using namespace std;
 namespace po = boost::program_options;
 
-static void generate_password(size_t length, const string &strip, string &output);
+static void generate_password(size_t length, const string& strip, ostream& output);
+static void generate_passphrase(size_t length, ostream& output);
 static void expand_strip(const string &in, string &out);
+static void raw_randomness(size_t length, ostream& out_file);
+extern "C" {char* getDiceWd (int n);}
 
 int main(int argc, char **argv)
 {
 	size_t password_len = 9;
 	string strip = "a-z";
+	string file_name;
+	ostream *output;
+	ofstream out_file;
+
 	po::options_description desc("Options");
         desc.add_options()
-		("help,h", "produce this help message")
-		("version", "prints version string")
-		("length,l", po::value<size_t>(&password_len)->default_value(8), "length of password")
+		("help,h", "Display this help message and exit.")
+		("version", "Output version information and exit.")
+		("length,l", po::value<size_t>(&password_len)->default_value(8), "length of password/passphrase")
 		("strip,s", po::value<string>(&strip)->default_value("a-zA-Z0-9!@#$%^&*_-"), "strip for password")
+		("passphrase,p", "generate a passphrase instead of a password")
+		("raw", "strip for password")
+		("file,f", po::value<string>(&file_name)->default_value("-"),
+			"Write output to FILE, instead of stdout, unless FILE is -.")
 		("verbose,v", "print additional info")
         ;
 
@@ -47,7 +60,7 @@ int main(int argc, char **argv)
 	po::notify(vm);
 
 	if (vm.count("help")) {
-		cout<<PACKAGE_STRING<<" - Secure password Generator"<<endl;
+		cout<<PACKAGE_STRING<<" - Secure password/passphrase generator"<<endl;
 		cout<<"Synopsis:"<<endl;
 		cout<<"  spass [options]"<<endl<<endl;
 		cout<<desc<<endl;
@@ -56,6 +69,7 @@ int main(int argc, char **argv)
 	if (vm.count("version")) {
 		cout<<PACKAGE_STRING<<endl;
 		cout<<"Copyright (C) 2010-2012 Guy Rutenberg <http://www.guyrutenberg.com/contact-me>"<<endl;
+		cout<<"The passphrase wordlist (C) 2000 Arnold G. Reinhold"<<endl;
 		return 0;
 	}
 
@@ -64,10 +78,25 @@ int main(int argc, char **argv)
 	if (vm.count("verbose")) {
 		cout<<"strip: "<<exstrip<<endl;
 	}
-	string output;
-	generate_password(password_len, exstrip, output);
 
-	cout<<output<<endl;
+	output = &cout;
+	if (file_name != "-") {
+		out_file.open(file_name.c_str(), ofstream::binary | ios::out);
+		output = &out_file;
+	}
+
+	AudioRandom::getInstance()->setBackend(AudioRandomPortAudio::getInstance());
+
+	if (vm.count("raw")) {
+		raw_randomness(password_len, *output);
+	} else if (vm.count("passphrase")) {
+		generate_passphrase(password_len, *output);
+	} else {
+		generate_password(password_len, exstrip, *output);
+	}
+
+	if (out_file.is_open())
+		out_file.close();
 
 	return 0;
 }
@@ -76,17 +105,29 @@ int main(int argc, char **argv)
  * Generate a password of length 'length' using the strip 'strip'.
  * @param output [out] The generated password.
  */
-void generate_password(size_t length, const string &strip, string &output)
+void generate_password(size_t length, const string& strip, ostream& output)
 {
-	output.clear();
-	output.reserve(length);
+	AudioRandom *arand = AudioRandom::getInstance();
 
 	size_t strip_len = strip.size();
 	for (size_t i = 0; i < length; i++) {
-		double r = static_cast<double>(Grandom::getInstance()()) / static_cast<uint32_t>(-1);
+		double r = static_cast<double>(arand->getDword()) / static_cast<uint32_t>(-1);
 		uint32_t transform = static_cast<uint32_t>(r * strip_len) % strip_len;
-		output += strip.at(transform);
+		output.put(strip.at(transform));
 	}
+	output << endl;
+}
+
+void generate_passphrase(size_t length, ostream &output)
+{
+	AudioRandom *arand = AudioRandom::getInstance();
+
+	for (size_t i = 0; i < length; i++) {
+		output<<getDiceWd(arand->getDword());
+		if (i != length-1)
+			output<<' ';
+	}
+	output << endl;
 }
 
 /**
@@ -108,4 +149,19 @@ void expand_strip(const string &in, string &out)
 			}
 		}
 	}
+}
+
+/**
+ * Write at least `length' bytes of random data to `outl_file'.
+ */
+void raw_randomness(size_t length, ostream& out_file)
+{
+	size_t entropy_pool_size;
+	size_t bytes_written = 0;
+	const void* entropy_pool;
+	do {
+		entropy_pool = AudioRandom::getInstance()->getRaw(&entropy_pool_size);
+		out_file.write((const char*)entropy_pool, entropy_pool_size);
+		bytes_written += entropy_pool_size;
+	} while (length > bytes_written);
 }

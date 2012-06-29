@@ -1,6 +1,8 @@
 bin_PROGRAMS = spass
 spass_SOURCES = audio_random.h \
 		audio_random.cpp \
+		audio_random_alsa.h \
+		audio_random_alsa.cpp \
 		audio_random_oss.h \
 		audio_random_oss.cpp \
 		audio_random_portaudio.h \

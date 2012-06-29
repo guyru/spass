@@ -25,7 +25,7 @@
 
 using namespace std;
 
-const size_t NUM_SAMPLES = 2048;
+const size_t NUM_SAMPLES = 2048 + 512;
 
 AudioRandom::AudioRandom() :
 	m_index(0)

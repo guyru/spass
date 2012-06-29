@@ -22,6 +22,7 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include "audio_random.h"
+#include "audio_random_alsa.h"
 #include "audio_random_portaudio.h"
 #include "audio_random_oss.h"
 #include "config.h"
@@ -86,7 +87,7 @@ int main(int argc, char **argv)
 		output = &out_file;
 	}
 
-	AudioRandom::getInstance()->setBackend(AudioRandomOSS::getInstance());
+	AudioRandom::getInstance()->setBackend(AudioRandomAlsa::getInstance());
 
 	if (vm.count("raw")) {
 		raw_randomness(password_len, *output);
@@ -164,5 +165,5 @@ void raw_randomness(size_t length, ostream& out_file)
 		entropy_pool = AudioRandom::getInstance()->getRaw(&entropy_pool_size);
 		out_file.write((const char*)entropy_pool, entropy_pool_size);
 		bytes_written += entropy_pool_size;
-	} while (length > bytes_written);
+	} while (!length || length > bytes_written);
 }

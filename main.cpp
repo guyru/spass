@@ -46,32 +46,45 @@ int main(int argc, char **argv)
 
 	po::options_description desc("Options");
         desc.add_options()
-		("help,h", "Display this help message and exit.")
-		("version", "Output version information and exit.")
-		("length,l", po::value<size_t>(&password_len)->default_value(8), "length of password/passphrase")
-		("strip,s", po::value<string>(&strip)->default_value("a-zA-Z0-9!@#$%^&*_-"), "strip for password")
+		("help,h", "display this help message and exit")
+		("version", "output version information and exit")
+		("length,l", po::value<size_t>(&password_len)->default_value(8),
+			"length of password/passphrase")
+		("strip,s",
+			po::value<string>(&strip)->default_value("a-zA-Z0-9!@#$%^&*_-"),
+			"strip for password")
 		("passphrase,p", "generate a passphrase instead of a password")
 		("raw", "strip for password")
 		("file,f", po::value<string>(&file_name)->default_value("-"),
-			"Write output to FILE, instead of stdout, unless FILE is -.")
+			"write output to FILE, instead of stdout, unless FILE is -")
 		("verbose,v", "print additional info")
         ;
 
 	po::variables_map vm;
-	po::store(po::parse_command_line(argc, argv, desc), vm);
-	po::notify(vm);
+	try {
+		po::store(po::parse_command_line(argc, argv, desc), vm);
+		po::notify(vm);
+	} catch ( const po::error& e ) {
+		cerr << PACKAGE ": " << e.what() << endl;
+		cerr << "Try `" PACKAGE " --help' for more information. "
+			<< endl;
+		return 1;
+	}
 
 	if (vm.count("help")) {
-		cout<<PACKAGE_STRING<<" - Secure password/passphrase generator"<<endl;
-		cout<<"Synopsis:"<<endl;
-		cout<<"  spass [options]"<<endl<<endl;
-		cout<<desc<<endl;
+		cout << PACKAGE_STRING
+			" - Secure password/passphrase generator" << endl;
+		cout << "Synopsis:" << endl;
+		cout << "  " PACKAGE " [options]" << endl << endl;
+		cout << desc << endl;
 		return 0;
 	}
 	if (vm.count("version")) {
-		cout<<PACKAGE_STRING<<endl;
-		cout<<"Copyright (C) 2010-2012 Guy Rutenberg <http://www.guyrutenberg.com/contact-me>"<<endl;
-		cout<<"The passphrase wordlist (C) 2000 Arnold G. Reinhold"<<endl;
+		cout << PACKAGE_STRING << endl;
+		cout << "Copyright (C) 2010-2012 Guy Rutenberg "
+			"<http://www.guyrutenberg.com/contact-me>" << endl;
+		cout << "The passphrase wordlist (C) 2000 Arnold G. Reinhold"
+			<< endl;
 		return 0;
 	}
 

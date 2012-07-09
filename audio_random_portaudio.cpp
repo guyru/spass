@@ -46,10 +46,15 @@ AudioRandomPortAudio::AudioRandomPortAudio()
 	
 	if (err != paNoError )
 		throw runtime_error("Pa_OpenDefaultStream() failed");
+
+	err = Pa_StartStream(m_stream);
+	if (err != paNoError)
+		throw runtime_error("Pa_StartStream() failed");
 }
 
 AudioRandomPortAudio::~AudioRandomPortAudio()
 {
+	// Pa_StopStream is unnecessary as we call Pa_CloseStream anyway
 	if (!m_pa_initialization_failed)
 		Pa_CloseStream( m_stream );
 }
@@ -63,15 +68,9 @@ AudioRandomPortAudio* AudioRandomPortAudio::getInstance()
 void AudioRandomPortAudio::getSamples(void *samples, size_t num_samples)
 {
 	PaError err;
-	err = Pa_StartStream(m_stream);
-	if (err != paNoError)
-		throw runtime_error("Pa_StartStream() failed");
 
 	err = Pa_ReadStream(m_stream, samples, num_samples);
 	if (err != paNoError)
 		throw runtime_error("Pa_ReadStream() failed");
 
-	err = Pa_StopStream(m_stream);
-	if (err != paNoError)
-		throw runtime_error("Pa_StopStream() failed");
 }

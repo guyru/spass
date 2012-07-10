@@ -22,10 +22,20 @@
 #include <string>
 #include <boost/program_options.hpp>
 #include "audio_random.h"
-#include "audio_random_alsa.h"
-#include "audio_random_portaudio.h"
-#include "audio_random_oss.h"
 #include "config.h"
+
+#ifdef WITH_PORTAUDIO
+	#include "audio_random_portaudio.h"
+	#define AUDIO_RANDOM_BACKEND AudioRandomPortAudio
+#else
+#ifdef WITH_OSS
+	#include "audio_random_oss.h"
+	#define AUDIO_RANDOM_BACKEND AudioRandomOSS
+#else
+	#include "audio_random_alsa.h"
+	#define AUDIO_RANDOM_BACKEND AudioRandomAlsa
+#endif
+#endif
 
 using namespace std;
 namespace po = boost::program_options;
@@ -87,6 +97,7 @@ int main(int argc, char **argv)
 			<< endl;
 		return 0;
 	}
+	AudioRandom::getInstance()->setBackend(AUDIO_RANDOM_BACKEND::getInstance());
 
 	string exstrip;
 	expand_strip(strip, exstrip);
@@ -100,7 +111,6 @@ int main(int argc, char **argv)
 		output = &out_file;
 	}
 
-	AudioRandom::getInstance()->setBackend(AudioRandomAlsa::getInstance());
 
 	if (vm.count("raw")) {
 		raw_randomness(password_len, *output);

@@ -33,20 +33,22 @@ Installation
 =============
 Just run::
 
-  ./configure
+  cmake
   make
   sudo make install
 
+Or use one of the provided binary packages.
+
 Configuration
 -------------
-``./configure`` can receive the following options::
+``cmake`` can receive the following options::
 
-  --with-portaudio        use PortAudio as the audio backend instead of ALSA
-                          [default=no]
-  --with-oss              use Open Sound System (OSS) as the audio backend
-                          instead of ALSA [default=no]
-  --with-alsa             use Advanced Linux Sound Architecture (ALSA) as the
-                          audio backend [default=yes]
+  WITH_PORTAUDIO          use PortAudio as the audio backend instead of ALSA
+                          [default=OFF]
+  WITH_OSS                use Open Sound System (OSS) as the audio backend
+                          instead of ALSA [default=OFF]
+  WITH_ALSA               use Advanced Linux Sound Architecture (ALSA) as the
+                          audio backend [default=ON]
 
 The options are exclusive, e.g. only one of them can be used each time. If no
 option is provided, the ALSA is used.

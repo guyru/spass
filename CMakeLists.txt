@@ -62,6 +62,11 @@ configure_file (
 
 install(TARGETS spass RUNTIME DESTINATION bin/)
 
+add_custom_target(dist
+	COMMAND git archive --prefix=${PACKAGE_STRING}/ HEAD
+		-o ${CMAKE_BINARY_DIR}/${PACKAGE_STRING}.tar.bz2
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 # Packaging
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Secure password/passpharse generator")
 set (CPACK_PACKAGE_VENDOR "Guy Rutenberg")

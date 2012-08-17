@@ -70,9 +70,15 @@ int main(int argc, char **argv)
 		("verbose,v", "print additional info")
         ;
 
+	po::positional_options_description pos_desc;
+	pos_desc.add("length", 1);
+
+
 	po::variables_map vm;
 	try {
-		po::store(po::parse_command_line(argc, argv, desc), vm);
+		po::store(po::command_line_parser(argc, argv).
+				options(desc).positional(pos_desc).run(),
+			vm);
 		po::notify(vm);
 	} catch ( const po::error& e ) {
 		cerr << PACKAGE ": " << e.what() << endl;

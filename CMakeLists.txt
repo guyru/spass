@@ -24,6 +24,7 @@ set (SRC
 	diceware8k.c
 	main.cpp
 	md5.c
+	spass_utils.cpp
 )
 
 set (LIBS ${Boost_LIBRARIES})
@@ -81,3 +82,35 @@ set (CPACK_PACKAGE_FILE_NAME
 	"${PACKAGE}_${VERSION}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")
 
 include (CPack) # this has to come after all the packaging configuration
+
+project (spass-qt)
+# find_package (Qt4 REQUIRED MULTIMEDIA)
+find_package (Qt4 REQUIRED)
+include (${QT_USE_FILE})
+include_directories (${CMAKE_CURRENT_BINARY_DIR})
+
+include_directories (${ALSA_INCLUDE_DIRS})
+
+set (spass-qt_SOURCES
+	audio_random.cpp
+	audio_random_alsa.cpp
+	diceware8k.c
+	main_qt.cpp
+	mainwindow.cpp
+	md5.c
+	spass_utils.cpp
+	)
+	
+set (spass-qt_HEADERS mainwindow.h)
+set (spass-qt_FORMS mainwindow.ui)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+
+QT4_WRAP_CPP (spass-qt_HEADERS_MOC ${spass-qt_HEADERS})
+QT4_WRAP_UI (spass-qt_FORMS_HEADERS ${spass-qt_FORMS})
+add_definitions (${QT_DEFINITIONS})
+add_executable(spass-qt ${spass-qt_SOURCES}
+	${spass-qt_HEADERS_MOC}
+	${spass-qt_FORMS_HEADERS})
+target_link_libraries (spass-qt ${QT_LIBRARIES} ${ALSA_LIBRARIES})
+

@@ -1,11 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
 #include <QMainWindow>
 
 namespace Ui {
 	class MainWindow;
 }
+
+class SpassStrip;
 
 class MainWindow : public QMainWindow
 {
@@ -17,6 +20,7 @@ public:
 
 public slots:
 	void updateStrength();
+	void updateStrip();
 	
 private slots:
 	void on_copyButton_clicked();
@@ -25,6 +29,8 @@ private slots:
 
 private:
 	Ui::MainWindow *ui;
+	std::unique_ptr<SpassStrip> strip;
+
 };
 
 #endif // MAINWINDOW_H

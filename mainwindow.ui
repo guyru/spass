@@ -255,8 +255,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>217</x>
-     <y>425</y>
+     <x>226</x>
+     <y>479</y>
     </hint>
     <hint type="destinationlabel">
      <x>217</x>
@@ -287,8 +287,8 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>412</x>
-     <y>196</y>
+     <x>423</x>
+     <y>194</y>
     </hint>
     <hint type="destinationlabel">
      <x>176</x>
@@ -312,8 +312,89 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>61</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>79</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_4</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>317</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateStrength()</slot>
+  <slot>updateStrip()</slot>
  </slots>
 </ui>

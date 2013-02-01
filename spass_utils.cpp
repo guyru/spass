@@ -1,6 +1,7 @@
 
 #include <string>
 #include <fstream>
+#include <cmath>
 #include "audio_random.h"
 #include "spass_utils.h"
 
@@ -71,4 +72,24 @@ void raw_randomness(size_t length, ostream& out_file)
 		out_file.write((const char*)entropy_pool, entropy_pool_size);
 		bytes_written += entropy_pool_size;
 	} while (!length || length > bytes_written);
+}
+
+void SpassStrip::generatePassword(size_t length, string &out)
+{
+	AudioRandom *arand = AudioRandom::getInstance();
+	size_t len_strip = strip.size();
+	if (len_strip <= 0)
+		return;
+	unsigned strip_log = ceil(log2(len_strip));
+
+	for (size_t i = 0; i < length; i++) {
+		size_t rand;
+		do {
+			rand = arand->getDword() & ((1 << strip_log) - 1);
+		} while (rand >= len_strip);
+
+		if (i != 0)
+			out += separator;
+		out += strip.at(rand);
+	}
 }

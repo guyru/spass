@@ -187,6 +187,9 @@
     </item>
     <item>
      <widget class="QLineEdit" name="outputEdit">
+      <property name="styleSheet">
+       <string notr="true">font-family: &quot;DejaVu Sans Mono&quot;, &quot;Consolas&quot;, monospace ;</string>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>

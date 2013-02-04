@@ -61,16 +61,35 @@ void MainWindow::updateStrip()
 	if (ui->tabWidget->currentWidget() == ui->tabPassword) {
 		strip->separator = "";
 		for (const auto& widget : ui->tabPassword->findChildren<QCheckBox *>()) {
-			if (widget->checkState()) {
+			if (widget->isChecked()) {
 				const string strip_string = widget->property("strip").toString().toStdString();
 				strip->strip.reserve(strip->strip.size() + strip_string.size());
 				for (const auto &i : strip_string)
 					strip->strip.push_back(string(1, i));
 			}
 		}
-	} else {
+	} else if (ui->tabWidget->currentWidget() == ui->tabPassphrase) {
 		strip->separator = " ";
 		strip->strip.assign(std::begin(Dicewds8k), std::end(Dicewds8k));
+	} else if (ui->tabWidget->currentWidget() == ui->tabCustom) {
+		// first copy the custom strip into the "strip" property of
+		// the corresponding radioButton.
+		ui->radioButtonCustom->setProperty("strip", ui->lineEditCustom->text());
+
+		strip->separator = "";
+		for (const auto& widget : ui->tabCustom->findChildren<QRadioButton *>()) {
+			if (!widget->isChecked())
+				continue;
+
+			const string strip_string = widget->property("strip").toString().toStdString();
+			strip->strip.clear();
+			for (const auto &i : strip_string)
+				strip->strip.push_back(string(1, i));
+			break;
+		}
+	} else {
+		qWarning() << "MainWindow::updateStrip: Unknown tab";
 	}
+
 	updateStrength();
 }

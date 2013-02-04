@@ -98,19 +98,59 @@
        <attribute name="title">
         <string>Passphrase</string>
        </attribute>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>45</x>
-          <y>26</y>
-          <width>281</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Using Default wordlist</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Using the Diceware8k word list, (C) 2000 Arnold G. Reinhold</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tabCustom">
+       <attribute name="title">
+        <string>Custom</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="radioButtonHex">
+          <property name="text">
+           <string>Hexadecimal</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+          <property name="strip" stdset="0">
+           <string notr="true">0123456789ABCDEF</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButtonBase64">
+          <property name="text">
+           <string>Base64</string>
+          </property>
+          <property name="strip" stdset="0">
+           <string notr="true">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QRadioButton" name="radioButtonCustom">
+            <property name="text">
+             <string>Use following characters:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditCustom"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -123,6 +163,9 @@
        <widget class="QLabel" name="label_2">
         <property name="text">
          <string>Length</string>
+        </property>
+        <property name="buddy">
+         <cstring>lengthSpinBox</cstring>
         </property>
        </widget>
       </item>
@@ -205,7 +248,12 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;2013 (C) Guy Rutenberg&lt;br/&gt;&lt;a href=&quot;http://guyrutenberg.com/spass&quot;&gt;&lt;span style=&quot;color:#0000ff;&quot;&gt;http://guyrutenberg.com/spass&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Source Code: &lt;a href=&quot;http://github.com/guyru/spass&quot;&gt;&lt;span style=&quot;color:#0000ff;&quot;&gt;http://github.com/guyru/spass&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;p align=&quot;center&quot;&gt;2013 (C) Guy Rutenberg&lt;br/&gt;
+Website: &lt;a href=&quot;http://guyrutenberg.com/category/projects/spass/&quot;&gt;http://guyrutenberg.com/category/projects/spass/&lt;/a&gt;&lt;br/&gt;
+Source Code: &lt;a href=&quot;http://github.com/guyru/spass&quot;&gt;http://github.com/guyru/spass&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;</string>
+      </property>
+      <property name="openExternalLinks">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -388,6 +436,70 @@
     <hint type="sourcelabel">
      <x>317</x>
      <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButtonBase64</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButtonHex</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>217</x>
+     <y>255</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditCustom</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>radioButtonCustom</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>157</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>118</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButtonCustom</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateStrip()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>157</y>
     </hint>
     <hint type="destinationlabel">
      <x>217</x>

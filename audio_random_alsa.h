@@ -19,8 +19,9 @@
 #ifndef _AUDIO_RANDOM_ALSA_H_
 #define _AUDIO_RANDOM_ALSA_H_
 
-#include <alsa/asoundlib.h>
 #include "audio_random.h"
+
+typedef struct _snd_pcm snd_pcm_t;
 
 class AudioRandomAlsa
 : public AudioRandomSource {

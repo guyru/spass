@@ -30,3 +30,5 @@
 
 /* Use PortAudio */
 #cmakedefine WITH_PORTAUDIO
+
+#cmakedefine AUDIO_RANDOM_BACKEND @AUDIO_RANDOM_BACKEND@

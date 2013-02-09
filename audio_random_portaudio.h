@@ -19,8 +19,9 @@
 #ifndef _AUDIO_RANDOM_PORTAUDIO_H_
 #define _AUDIO_RANDOM_PORTAUDIO_H_
 
-#include <portaudio.h>
 #include "audio_random.h"
+
+struct PaStream;
 
 class AudioRandomPortAudio
 : public AudioRandomSource {

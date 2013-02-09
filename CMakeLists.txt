@@ -31,34 +31,39 @@ set (LIBS ${Boost_LIBRARIES})
 	
 if (WITH_ALSA)
 	find_package (ALSA REQUIRED)
-	set (SRC ${SRC} audio_random_alsa.cpp)
-	set (LIBS ${LIBS} ${ALSA_LIBRARIES})
+	set (AUDIO_SRC audio_random_alsa.cpp)
+	set (AUDIO_LIBS ${ALSA_LIBRARIES})
 	include_directories (${ALSA_INCLUDE_DIRS})
+	set (AUDIO_RANDOM_BACKEND AudioRandomAlsa)
 	message(STATUS "Using ALSA as audio backend")
 endif ()
 
 if (WITH_PORTAUDIO)
 	pkg_check_modules (PORTAUDIO REQUIRED portaudio-2.0)
-	set (SRC ${SRC} audio_random_portaudio.cpp)
-	set (LIBS ${LIBS} ${PORTAUDIO_LIBRARIES})
+	set (AUDIO_SRC audio_random_portaudio.cpp)
+	set (AUDIO_LIBS ${PORTAUDIO_LIBRARIES})
 	include_directories (${PORTAUDIO_INCLUDE_DIRS})
+	set (AUDIO_RANDOM_BACKEND AudioRandomPortAudio)
 	message(STATUS "Using PortAudio as audio backend")
 endif ()
 
 if (WITH_OSS)
-	set (SRC ${SRC} audio_random_oss.cpp)
+	set (AUDIO_SRC audio_random_oss.cpp)
+	set (AUDIO_RANDOM_BACKEND AudioRandomOSS)
 	message(STATUS "Using OSS as audio backend")
 endif ()
 
 include_directories (${Boost_INCLUDE_DIRS})
 include_directories (${PROJECT_SOURCE_DIR})
 
-add_executable (spass ${SRC})
-target_link_libraries (spass ${LIBS})
+add_executable (spass
+	${SRC}
+	${AUDIO_SRC})
+target_link_libraries (spass ${LIBS} ${AUDIO_LIBS})
 
 configure_file (
 	${CMAKE_SOURCE_DIR}/config.h.cmake
-	${CMAKE_SOURCE_DIR}/config.h
+	${CMAKE_BINARY_DIR}/config.h
 )
 
 install(TARGETS spass RUNTIME DESTINATION bin/)
@@ -84,7 +89,7 @@ set (CPACK_PACKAGE_FILE_NAME
 include (CPack) # this has to come after all the packaging configuration
 
 project (spass-qt)
-# find_package (Qt4 REQUIRED MULTIMEDIA)
+#find_package (Qt4 REQUIRED MULTIMEDIAKIT)
 find_package (Qt4 REQUIRED)
 include (${QT_USE_FILE})
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
@@ -93,7 +98,6 @@ include_directories (${ALSA_INCLUDE_DIRS})
 
 set (spass-qt_SOURCES
 	audio_random.cpp
-	audio_random_alsa.cpp
 	diceware8k.c
 	main_qt.cpp
 	mainwindow.cpp
@@ -109,8 +113,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 QT4_WRAP_CPP (spass-qt_HEADERS_MOC ${spass-qt_HEADERS})
 QT4_WRAP_UI (spass-qt_FORMS_HEADERS ${spass-qt_FORMS})
 add_definitions (${QT_DEFINITIONS})
-add_executable(spass-qt ${spass-qt_SOURCES}
+add_executable(spass-qt
+	${spass-qt_SOURCES}
+	${AUDIO_SRC}
 	${spass-qt_HEADERS_MOC}
 	${spass-qt_FORMS_HEADERS})
-target_link_libraries (spass-qt ${QT_LIBRARIES} ${ALSA_LIBRARIES})
+target_link_libraries (spass-qt ${QT_LIBRARIES} ${AUDIO_LIBS})
 

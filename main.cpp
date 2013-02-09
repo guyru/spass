@@ -23,20 +23,10 @@
 #include <boost/program_options.hpp>
 #include "audio_random.h"
 #include "spass_utils.h"
+#include "audio_random_portaudio.h"
+#include "audio_random_oss.h"
+#include "audio_random_alsa.h"
 #include "config.h"
-
-#ifdef WITH_PORTAUDIO
-	#include "audio_random_portaudio.h"
-	#define AUDIO_RANDOM_BACKEND AudioRandomPortAudio
-#else
-#ifdef WITH_OSS
-	#include "audio_random_oss.h"
-	#define AUDIO_RANDOM_BACKEND AudioRandomOSS
-#else
-	#include "audio_random_alsa.h"
-	#define AUDIO_RANDOM_BACKEND AudioRandomAlsa
-#endif
-#endif
 
 using namespace std;
 namespace po = boost::program_options;

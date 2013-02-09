@@ -6,7 +6,11 @@
 #include "ui_mainwindow.h"
 #include "audio_random.h"
 #include "audio_random_alsa.h"
+#include "audio_random_portaudio.h"
+#include "audio_random_oss.h"
 #include "spass_utils.h"
+#include "config.h"
+
 
 const int DEFAULT_MAX_STRENGTH = 128;
 extern char * Dicewds8k[1<<13];
@@ -19,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->strengthBar->setMaximum(DEFAULT_MAX_STRENGTH);
-	AudioRandom::getInstance()->setBackend(AudioRandomAlsa::getInstance());
+	AudioRandom::getInstance()->setBackend(AUDIO_RANDOM_BACKEND::getInstance());
 	updateStrip();
 }
 

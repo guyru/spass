@@ -26,7 +26,6 @@ private slots:
 	void on_copyButton_clicked();
 	void on_generateButton_clicked();
 
-
 private:
 	Ui::MainWindow *ui;
 	std::unique_ptr<SpassStrip> strip;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012  Guy Rutenberg
+ * Copyright (C) 2010-2013  Guy Rutenberg
  * http://www.guyrutenberg.com
  * 
  * This program is free software: you can redistribute it and/or modify

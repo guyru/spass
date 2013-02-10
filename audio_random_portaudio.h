@@ -21,7 +21,7 @@
 
 #include "audio_random.h"
 
-struct PaStream;
+typedef void PaStream;
 
 class AudioRandomPortAudio
 : public AudioRandomSource {

@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.8.3)
 project (spass)
 
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_support)
+
 # Compile-time Options
 option (WITH_ALSA "Use Advanced Linux Sound Architecture (ALSA) as the audio
 backed [default=ON]" ON)
@@ -39,7 +41,7 @@ if (WITH_ALSA)
 endif ()
 
 if (WITH_PORTAUDIO)
-	pkg_check_modules (PORTAUDIO REQUIRED portaudio-2.0)
+	find_package (Portaudio REQUIRED portaudio-2.0)
 	set (AUDIO_SRC audio_random_portaudio.cpp)
 	set (AUDIO_LIBS ${PORTAUDIO_LIBRARIES})
 	include_directories (${PORTAUDIO_INCLUDE_DIRS})

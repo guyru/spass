@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>435</width>
+    <width>436</width>
     <height>511</height>
    </rect>
   </property>
@@ -250,7 +250,7 @@
       <property name="text">
        <string>&lt;p align=&quot;center&quot;&gt;2013 (C) Guy Rutenberg&lt;br/&gt;
 Website: &lt;a href=&quot;http://guyrutenberg.com/category/projects/spass/&quot;&gt;http://guyrutenberg.com/category/projects/spass/&lt;/a&gt;&lt;br/&gt;
-Source Code: &lt;a href=&quot;http://github.com/guyru/spass&quot;&gt;http://github.com/guyru/spass&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;</string>
+Source Code: &lt;a href=&quot;http://sf.net/projects/spass&quot;&gt;http://sf.net/projects/spass&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;</string>
       </property>
       <property name="openExternalLinks">
        <bool>true</bool>
@@ -271,7 +271,7 @@ Source Code: &lt;a href=&quot;http://github.com/guyru/spass&quot;&gt;http://gith
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>435</width>
+     <width>436</width>
      <height>25</height>
     </rect>
    </property>
@@ -291,11 +291,21 @@ Source Code: &lt;a href=&quot;http://github.com/guyru/spass&quot;&gt;http://gith
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
+  <tabstop>generateButton</tabstop>
+  <tabstop>copyButton</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>checkBox</tabstop>
-  <tabstop>outputEdit</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>radioButtonHex</tabstop>
+  <tabstop>radioButtonBase64</tabstop>
+  <tabstop>radioButtonCustom</tabstop>
+  <tabstop>lineEditCustom</tabstop>
+  <tabstop>lengthSpinBox</tabstop>
+  <tabstop>horizontalSlider_length</tabstop>
   <tabstop>buttonBox</tabstop>
-  <tabstop>generateButton</tabstop>
+  <tabstop>outputEdit</tabstop>
  </tabstops>
  <resources/>
  <connections>

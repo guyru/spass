@@ -31,6 +31,12 @@ For more options see ``spass --help``.
 
 Installation
 =============
+Dependencies
+------------
+ * CMake-2.8
+ * PortAudio
+Linux
+-----
 Just run::
 
   mkdir build
@@ -40,6 +46,19 @@ Just run::
   sudo make install
 
 Or use one of the provided binary packages.
+
+Windows
+-------
+Compiling Boost and PortAudio from source is easy. PortAudio uses CMake (just
+generate and compile), and compiling boost is a matter of: ``bootstrap`` and
+``.\b2``.
+
+If you use Visual Studio Express 2012, you may need to set the ``Boost_COMILER``
+variable in CMake to ``-vc110``, else it won't be detected properly.
+
+Due to a bug in CMake (actually a regression) setting the SubSystem doesn't work
+as it should. It should be set manually in the Project
+Properties->Linker->System to "Windows" (at least for release).
 
 Configuration
 -------------

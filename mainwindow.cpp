@@ -31,7 +31,7 @@
 
 
 const int DEFAULT_MAX_STRENGTH = 128;
-extern char * Dicewds8k[1<<13];
+extern "C" char * Dicewds8k[1<<13];
 
 using namespace std;
 
@@ -84,10 +84,11 @@ void MainWindow::updateStrip()
 		strip->separator = "";
 		for (const auto& widget : ui->tabPassword->findChildren<QCheckBox *>()) {
 			if (widget->isChecked()) {
-				const string strip_string = widget->property("strip").toString().toStdString();
-				strip->strip.reserve(strip->strip.size() + strip_string.size());
-				for (const auto &i : strip_string)
-					strip->strip.push_back(string(1, i));
+				const QByteArray strip_chars =  widget->property("strip").toString().toAscii();
+				strip->strip.reserve(strip->strip.size() + strip_chars.size());
+				const char *i = strip_chars.data();
+				for (const char *i = strip_chars.data(); *i; i++)
+					strip->strip.push_back(string(1, *i));
 			}
 		}
 	} else if (ui->tabWidget->currentWidget() == ui->tabPassphrase) {
@@ -103,10 +104,10 @@ void MainWindow::updateStrip()
 			if (!widget->isChecked())
 				continue;
 
-			const string strip_string = widget->property("strip").toString().toStdString();
+			const QByteArray strip_chars =  widget->property("strip").toString().toAscii();
 			strip->strip.clear();
-			for (const auto &i : strip_string)
-				strip->strip.push_back(string(1, i));
+			for (const char *i = strip_chars.data(); *i; i++)
+					strip->strip.push_back(string(1, *i));
 			break;
 		}
 	} else {

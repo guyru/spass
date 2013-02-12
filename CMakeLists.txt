@@ -19,6 +19,9 @@ set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 include (FindPkgConfig)
 
+if (WIN32)
+	set (Boost_USE_STATIC_LIBS ON)
+endif ()
 find_package (Boost REQUIRED COMPONENTS program_options)
 
 set (SRC
@@ -110,7 +113,7 @@ set (spass-qt_SOURCES
 set (spass-qt_HEADERS mainwindow.h)
 set (spass-qt_FORMS mainwindow.ui)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+set (QT_LIBRARIES ${QT_QTMAIN_LIBRARY} ${QT_LIBRARIES})
 
 QT4_WRAP_CPP (spass-qt_HEADERS_MOC ${spass-qt_HEADERS})
 QT4_WRAP_UI (spass-qt_FORMS_HEADERS ${spass-qt_FORMS})
@@ -120,5 +123,12 @@ add_executable(spass-qt
 	${AUDIO_SRC}
 	${spass-qt_HEADERS_MOC}
 	${spass-qt_FORMS_HEADERS})
-target_link_libraries (spass-qt ${QT_LIBRARIES} ${AUDIO_LIBS})
 
+if (WIN32)
+	# don't show console window in window when compiling in Release
+	set_target_properties(spass-qt PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+elseif (UNIX)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+endif ()
+
+target_link_libraries (spass-qt ${QT_LIBRARIES} ${AUDIO_LIBS})

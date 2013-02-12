@@ -27,6 +27,10 @@ void generate_passphrase(size_t length, std::ostream &output);
 void expand_strip(const std::string &in, std::string &out);
 void raw_randomness(size_t length, std::ostream& out_file);
 
+#ifdef _WIN32 // VC++ doesn't support log2 from C99
+inline double log2(double x) {return log(x)/log(2.);}
+#endif
+
 class SpassStrip
 {
 public:

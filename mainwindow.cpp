@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 	ui->strengthBar->setMaximum(DEFAULT_MAX_STRENGTH);
+	setWindowTitle(PACKAGE_STRING);
 	AudioRandom::getInstance()->setBackend(AUDIO_RANDOM_BACKEND::getInstance());
 	updateStrip();
 }

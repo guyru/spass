@@ -53,8 +53,12 @@ Compiling Boost and PortAudio from source is easy. PortAudio uses CMake (just
 generate and compile), and compiling boost is a matter of: ``bootstrap`` and
 ``.\b2``.
 
-If you use Visual Studio Express 2012, you may need to set the ``Boost_COMILER``
+If you use Visual Studio Express 2012, you may need to set the ``Boost_COMPILER``
 variable in CMake to ``-vc110``, else it won't be detected properly.
+
+In order to select the right Qt installation, set ``QT_QMAKE_EXECUTABLE`` to
+point to the correct path to ``qmake.exe``. CMake will use it to infer the rest
+of the paths.
 
 Due to a bug in CMake (actually a regression) setting the SubSystem doesn't work
 as it should. It should be set manually in the Project

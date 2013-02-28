@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 	}
 	if (vm.count("version")) {
 		cout << PACKAGE_STRING << endl;
-		cout << "Copyright (C) 2010-2012 Guy Rutenberg "
+		cout << "Copyright (C) 2010-2013 Guy Rutenberg "
 			"<http://www.guyrutenberg.com/contact-me>" << endl;
 		cout << "The passphrase wordlist (C) 2000 Arnold G. Reinhold"
 			<< endl;

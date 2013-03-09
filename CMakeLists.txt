@@ -95,7 +95,7 @@ set (CPACK_PACKAGE_VENDOR "Guy Rutenberg")
 set (CPACK_PACKAGE_VERSION ${VERSION})
 set (CPACK_PACKAGE_CONTACT "Guy Rutenberg <guyrutenberg@gmail.com>")
 set (CPACK_GENERATOR "DEB")
-set (CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/guyru/spass")
+set (CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://sourceforge.net/projects/spass")
 set (CPACK_DEBIAN_PACKAGE_SECTION "Utilities")
 exec_program ("dpkg" ARGS "--print-architecture"
 	OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE)
@@ -143,3 +143,4 @@ if (WIN32)
 endif ()
 
 target_link_libraries (spass-qt ${QT_LIBRARIES} ${AUDIO_LIBS})
+install(TARGETS spass-qt RUNTIME DESTINATION bin/)

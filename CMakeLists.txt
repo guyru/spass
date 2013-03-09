@@ -85,8 +85,8 @@ configure_file (
 install(TARGETS spass RUNTIME DESTINATION bin/)
 
 add_custom_target(dist
-	COMMAND git archive --prefix=${PACKAGE_STRING}/ HEAD
-		-o ${CMAKE_BINARY_DIR}/${PACKAGE_STRING}.tar.bz2
+	COMMAND git archive --format=tar --prefix=${PACKAGE_STRING}/ HEAD
+		| xz > ${CMAKE_BINARY_DIR}/${PACKAGE_STRING}.tar.xz
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Packaging

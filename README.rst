@@ -35,6 +35,9 @@ Dependencies
 ------------
  * CMake-2.8
  * PortAudio
+ * libasound2-dev
+ * libboost-program-options-dev
+ * libqt4-dev
 Linux
 -----
 Just run::

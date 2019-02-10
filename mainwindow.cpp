@@ -20,6 +20,7 @@
 #include <sstream>
 #include <QDebug>
 #include <QClipboard>
+#include <cmath>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "audio_random.h"

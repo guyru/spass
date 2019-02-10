@@ -106,8 +106,15 @@ include (CPack) # this has to come after all the packaging configuration
 
 project (spass-qt)
 #find_package (Qt4 REQUIRED MULTIMEDIAKIT)
-find_package (Qt4 REQUIRED)
-include (${QT_USE_FILE})
+# Find the QtWidgets library
+find_package(Qt5Widgets CONFIG REQUIRED)
+
+# Instruct CMake to run moc automatically when needed
+set(CMAKE_AUTOMOC ON)
+# Create code from a list of Qt designer ui files
+set(CMAKE_AUTOUIC ON)
+
+#include (${QT_USE_FILE})
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
 include_directories (${ALSA_INCLUDE_DIRS})
@@ -126,14 +133,12 @@ set (spass-qt_FORMS mainwindow.ui)
 
 set (QT_LIBRARIES ${QT_QTMAIN_LIBRARY} ${QT_LIBRARIES})
 
-QT4_WRAP_CPP (spass-qt_HEADERS_MOC ${spass-qt_HEADERS})
-QT4_WRAP_UI (spass-qt_FORMS_HEADERS ${spass-qt_FORMS})
+
 add_definitions (${QT_DEFINITIONS})
 add_executable(spass-qt
 	${spass-qt_SOURCES}
 	${AUDIO_SRC}
-	${spass-qt_HEADERS_MOC}
-	${spass-qt_FORMS_HEADERS})
+)
 
 
 if (WIN32)
@@ -142,5 +147,5 @@ if (WIN32)
 	set_target_properties(spass-qt PROPERTIES LINK_FLAGS_MINSIZEREL "/SUBSYSTEM:WINDOWS")
 endif ()
 
-target_link_libraries (spass-qt ${QT_LIBRARIES} ${AUDIO_LIBS})
+target_link_libraries (spass-qt Qt5::Widgets ${AUDIO_LIBS})
 install(TARGETS spass-qt RUNTIME DESTINATION bin/)

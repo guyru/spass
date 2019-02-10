@@ -86,7 +86,7 @@ void MainWindow::updateStrip()
 		strip->separator = "";
 		for (const auto& widget : ui->tabPassword->findChildren<QCheckBox *>()) {
 			if (widget->isChecked()) {
-				const QByteArray strip_chars =  widget->property("strip").toString().toAscii();
+				const QByteArray strip_chars =  widget->property("strip").toString().toLatin1();
 				strip->strip.reserve(strip->strip.size() + strip_chars.size());
 				const char *i = strip_chars.data();
 				for (const char *i = strip_chars.data(); *i; i++)
@@ -106,7 +106,7 @@ void MainWindow::updateStrip()
 			if (!widget->isChecked())
 				continue;
 
-			const QByteArray strip_chars =  widget->property("strip").toString().toAscii();
+			const QByteArray strip_chars =  widget->property("strip").toString().toLatin1();
 			strip->strip.clear();
 			for (const char *i = strip_chars.data(); *i; i++)
 					strip->strip.push_back(string(1, *i));

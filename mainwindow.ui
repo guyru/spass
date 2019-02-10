@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>436</width>
-    <height>436</height>
+    <width>437</width>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -248,9 +248,7 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>&lt;p align=&quot;center&quot;&gt;2013 (C) Guy Rutenberg&lt;br/&gt;
-Website: &lt;a href=&quot;http://guyrutenberg.com/category/projects/spass/&quot;&gt;http://guyrutenberg.com/category/projects/spass/&lt;/a&gt;&lt;br/&gt;
-Source Code: &lt;a href=&quot;http://sf.net/projects/spass&quot;&gt;http://sf.net/projects/spass&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;2013-2019 (C) Guy Rutenberg&lt;br/&gt;Website: &lt;a href=&quot;https://guyrutenberg.com/category/projects/spass/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://guyrutenberg.com/category/projects/spass/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Source Code: &lt;a href=&quot;https://sf.net/projects/spass&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sf.net/projects/spass&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="openExternalLinks">
        <bool>true</bool>

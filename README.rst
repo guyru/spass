@@ -37,7 +37,7 @@ Dependencies
  * PortAudio
  * libasound2-dev
  * libboost-program-options-dev
- * libqt4-dev
+ * qtbase5-dev
 Linux
 -----
 Just run::

@@ -11,7 +11,7 @@ OPTION (WITH_OSS "Use Open Sound System (OSS) as the audio backed
 [default=OFF]" OFF)
 
 set (PACKAGE "spass")
-set (VERSION "3.1")
+set (VERSION "3.2")
 set (PACKAGE_STRING "${PACKAGE}-${VERSION}")
 
 # autogenerate dependency information

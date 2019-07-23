@@ -72,7 +72,7 @@ void MainWindow::on_generateButton_clicked()
 void MainWindow::updateStrength()
 {
 	double bits_per_symbol = max(log2(strip->strip.size()), 0.0);
-	qDebug() << "Bits" << bits_per_symbol;
+	//qDebug() << "Bits" << bits_per_symbol;
 	int total_bits = bits_per_symbol * ui->lengthSpinBox->value();
 	ui->strengthBar->setMaximum(std::max(DEFAULT_MAX_STRENGTH, total_bits));
 	ui->strengthBar->setValue(total_bits);

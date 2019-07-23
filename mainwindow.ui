@@ -248,7 +248,7 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;2013-2019 (C) Guy Rutenberg&lt;br/&gt;Website: &lt;a href=&quot;https://guyrutenberg.com/category/projects/spass/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://guyrutenberg.com/category/projects/spass/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Source Code: &lt;a href=&quot;https://sf.net/projects/spass&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://sf.net/projects/spass&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;2013-2019 (C) Guy Rutenberg&lt;br/&gt;Website: &lt;a href=&quot;https://guyrutenberg.com/category/projects/spass/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://guyrutenberg.com/category/projects/spass/&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;Source Code: &lt;a href=&quot;https://github.com/guyru/spass&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/guyru/spass&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="openExternalLinks">
        <bool>true</bool>

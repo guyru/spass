@@ -3,6 +3,8 @@ Readme - spass
 ==============
 Secure password/passphrase generator.
 
+.. image:: https://user-images.githubusercontent.com/1255135/61715209-473d1b80-ad65-11e9-9db4-3cb880346c5b.png
+
 Authors
 =======
 * Author: `Guy Rutenberg`_

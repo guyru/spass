@@ -79,6 +79,7 @@ Configuration
                           instead of ALSA [default=OFF]
   WITH_ALSA               use Advanced Linux Sound Architecture (ALSA) as the
                           audio backend [default=ON]
+  WITH_GUI                Build the graphical frontend [default=ON]
 
 The options are exclusive, e.g. only one of them can be used each time. If no
 option is provided, the ALSA is used.

@@ -9,6 +9,7 @@ backed [default=ON]" ON)
 option (WITH_PORTAUDIO "Use PortAudio as the audio backed [default=OFF]" OFF)
 OPTION (WITH_OSS "Use Open Sound System (OSS) as the audio backed
 [default=OFF]" OFF)
+OPTION (WITH_GUI "Build the graphical frontend [default=ON]" ON)
 
 set (PACKAGE "spass")
 set (VERSION "3.2")
@@ -90,7 +91,7 @@ add_custom_target(dist
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Packaging
-set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Secure password/passpharse generator")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Secure password/passphrase generator")
 set (CPACK_PACKAGE_VENDOR "Guy Rutenberg")
 set (CPACK_PACKAGE_VERSION ${VERSION})
 set (CPACK_PACKAGE_CONTACT "Guy Rutenberg <guyrutenberg@gmail.com>")
@@ -104,6 +105,9 @@ set (CPACK_PACKAGE_FILE_NAME
 
 include (CPack) # this has to come after all the packaging configuration
 
+include_directories (${CMAKE_CURRENT_BINARY_DIR})
+
+if (WITH_GUI)
 project (spass-qt)
 #find_package (Qt4 REQUIRED MULTIMEDIAKIT)
 # Find the QtWidgets library
@@ -149,3 +153,5 @@ endif ()
 
 target_link_libraries (spass-qt Qt5::Widgets ${AUDIO_LIBS})
 install(TARGETS spass-qt RUNTIME DESTINATION bin/)
+
+endif () # WITH_GUI
